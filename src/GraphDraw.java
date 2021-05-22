@@ -14,6 +14,7 @@ public class GraphDraw extends JFrame {
         Dimension dim = tk.getScreenSize();
         setSize(700,500);
         setLocation(dim.width/4, dim.height/4);
+        setResizable(false);
 
         ControlPanel controlPanel=new ControlPanel(this);
         GraphPanel graphPanel=new GraphPanel(this);
