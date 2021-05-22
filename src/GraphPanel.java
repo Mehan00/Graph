@@ -9,9 +9,9 @@ import java.awt.*;
 //Główna klasa gdzie będzie rysowana nasza funkcja
 //bazowa skala 50
 
-class GraphPanel<DrawMainFrame> extends JPanel{
-    private DrawMainFrame parentFrame;
-    public GraphPanel(DrawMainFrame parentFrame) {
+class GraphPanel extends JPanel{
+    private AppDraw parentFrame;
+    public GraphPanel(AppDraw parentFrame) {
         this.parentFrame=parentFrame;
         setPreferredSize(new Dimension(600,600));
         
@@ -65,7 +65,9 @@ class GraphPanel<DrawMainFrame> extends JPanel{
         g1.drawLine(w,0,w,h*2); 
         g1.drawString("0", w - 8, h + 15);
 
-        //przykładowe funkcja 
+        //przykładowe funkcje 
+        //TO DO ----- liczby tylu double z panelu sterowania ?? double to fraction ??
+
         g1.setColor(Color.red);
         Polygon p1 = new Polygon();
         for (int x = -600; x <= 600; x++) {
@@ -79,6 +81,13 @@ class GraphPanel<DrawMainFrame> extends JPanel{
             p2.addPoint(w+scale*x, h - scale*((x*x) + 10));
         }
         g1.drawPolyline(p2.xpoints, p2.ypoints, p2.npoints);
+
+        g1.setColor(Color.blue);
+        Polygon p3 = new Polygon();
+        for (int x = -600; x <= 600; x++) {
+            p3.addPoint(w+scale*x, h - scale*(7/2));
+        }
+        g1.drawPolyline(p3.xpoints, p3.ypoints, p3.npoints);
         
         //---------------------------------------------
         
