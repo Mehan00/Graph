@@ -8,7 +8,7 @@ class ControlPanel<DrawMainFrame> extends JPanel{
 	
 		public ControlPanel(DrawMainFrame parentFrame) {
 			this.parentFrame=parentFrame;
-			setPreferredSize(new Dimension(700,200));
+			setPreferredSize(new Dimension(600,200));
 		
 		}
 }
