@@ -13,7 +13,7 @@ public class MainClass {
 
         EventQueue.invokeLater(new Runnable(){
             public void run(){
-                GraphDraw graph =new GraphDraw("Rysowanie Funkcji");
+                AppDraw graph =new AppDraw("Rysowanie Funkcji");
                 graph.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );
                 graph.setVisible(true);
                  
