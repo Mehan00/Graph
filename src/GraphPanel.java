@@ -42,12 +42,12 @@ class GraphPanel extends JPanel{
             g1.drawString(stringtemp, w - 15+50*i, h + 15);
         }
         for (int i = 1; i < 7; i++) {
-            Integer temp = i*10;
+            Integer temp = i*-10;
             String stringtemp = temp.toString();
             g1.drawString(stringtemp, w - 18-50*i, h + 15);
         }
         for (int i = 1; i < 7; i++) {
-            Integer temp = i*10;
+            Integer temp = i*-10;
             String stringtemp = temp.toString();
             g1.drawString(stringtemp,  w - 18, h + 15+50*i);
         }
@@ -71,14 +71,14 @@ class GraphPanel extends JPanel{
         g1.setColor(Color.red);
         Polygon p1 = new Polygon();
         for (int x = -600; x <= 600; x++) {
-            p1.addPoint(w+scale*x, h - scale*((4*x) + 3));
+            p1.addPoint(w+scale*x, h - scale*((parentFrame.a*x) + parentFrame.b));
         }
         g1.drawPolyline(p1.xpoints, p1.ypoints, p1.npoints);
 
         g1.setColor(Color.green);
         Polygon p2 = new Polygon();
         for (int x = -600; x <= 600; x++) {
-            p2.addPoint(w+scale*x, h - scale*((x*x) + 10));
+            p2.addPoint(w+scale*x, h - scale*((parentFrame.a * x * x) + (parentFrame.b * x ) + parentFrame.c));
         }
         g1.drawPolyline(p2.xpoints, p2.ypoints, p2.npoints);
 
