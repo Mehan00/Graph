@@ -6,10 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.*;
 
 
-//Główna klasa gdzie będzie rysowana nasza funkcja
-//bazowa skala 50
+//	Glowna klasa, w niej rysowane beda funkcje
 
 class GraphPanel extends JPanel{
+	
     private AppDraw parentFrame;
     
     public GraphPanel(AppDraw parentFrame) {
@@ -59,15 +59,13 @@ class GraphPanel extends JPanel{
         }
         
         
-        //główny układ współrzędnych
+        //Glowny uklad wspolrzednych
         g1.setColor(Color.black);
         g1.setStroke(new BasicStroke(3));
         g1.drawLine(0,h,w*2,h);
         g1.drawLine(w,0,w,h*2); 
         g1.drawString("0", w - 8, h + 15);
 
-        //przykładowe funkcje 
-        //TO DO ----- liczby tylu double z panelu sterowania ?? double to fraction ??
         
         if (!(parentFrame.flag == '-'))
         {
@@ -91,15 +89,33 @@ class GraphPanel extends JPanel{
         
 
         
-
-//        g1.setColor(Color.blue);
-//        Polygon p3 = new Polygon();
-//        for (int x = -600; x <= 600; x++) {
-//            p3.addPoint(w+scale*x, h - scale*(7/2));
-//        }
-        //g1.drawPolyline(p3.xpoints, p3.ypoints, p3.npoints);
-        
-        //---------------------------------------------
-        
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//	smieci:
+
+//g1.setColor(Color.blue);
+//Polygon p3 = new Polygon();
+//for (int x = -600; x <= 600; x++) {
+//  p3.addPoint(w+scale*x, h - scale*(7/2));
+//}
+//g1.drawPolyline(p3.xpoints, p3.ypoints, p3.npoints);
+
+//---------------------------------------------

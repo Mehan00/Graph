@@ -13,11 +13,10 @@ public class AppDraw extends JFrame {
     GraphPanel graphPanel;
     Color currentColor;
 
-    //poczatkowe wartosci dla funkcji, poza ekranem XD
     public int a=0;
     public int b=1000;
     public int c=1000;
-    public char flag = '-';
+    public char flag = '-';													//flaga rysowania '-' nic, 'l' liniowa, 'k' kwadratowa
 
     public AppDraw(String title) {
         
@@ -27,9 +26,12 @@ public class AppDraw extends JFrame {
         setSize(700,500);
         setLocation(100, 100);
         setResizable(false);
-
+        
+        //Panel zajmuj¹cy siê kontrolkami
         ControlPanel controlPanel=new ControlPanel(this);
+        //Panel zajmuj¹cy siê rysowaniem funkcji
         GraphPanel graphPanel=new GraphPanel(this);
+        
         add(controlPanel,BorderLayout.NORTH);
 		add(graphPanel,BorderLayout.SOUTH);
 		controlPanel.setBorder(new BevelBorder(BevelBorder.RAISED));

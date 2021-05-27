@@ -8,28 +8,34 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 //klasa do panelu sterowania
-//tutaj bÄ™dÄ… podawane wspÃ³Å‚rzÄ™dne na podstawie, ktÃ³rych w klasie GraphPanel bÄ™dÄ… rysowane
+//tutaj będą podawane współrzędne na podstawie, których w klasie GraphPanel będą rysowane
 class ControlPanel extends JPanel{
 	
+	private List<Function> history;
+	private int historyIndex;
+	
     private AppDraw parentFrame;
-	private JButton drawButton;
-	private JRadioButton liniowa,kwadratowa;
+	private JButton drawButton , poprzedniaFunkcja, kolejnaFunkcja;
+	private JRadioButton liniowa, kwadratowa;
     private ButtonGroup bg;
     private JTextField linA,linB,quadA,quadB,quadC;
     private JLabel labelA,labelB1,labelB2,mzero;
 	private int akcja = 1;
-
-	
 	
 	public ControlPanel(AppDraw parentFrame) {
+		
 		this.parentFrame=parentFrame;
 		setPreferredSize(new Dimension(600,200));
-
-
-		//interfejs
+		this.history = new ArrayList<Function>();
+		this.historyIndex= -1;
+//	INTERFEJS
+		
+		//	Button Group radio button (liniowa lub kwadratowa)
 		liniowa = new JRadioButton("LINIOWA");
 		kwadratowa = new JRadioButton("KWADRATOWA");
 		bg=new ButtonGroup();
@@ -39,7 +45,7 @@ class ControlPanel extends JPanel{
 		add(kwadratowa);
 		liniowa.setSelected(true);
 		
-
+		//	Pola Tekstowe
 		linA = new JTextField(3);
 		linB = new JTextField(3);
 		quadA = new JTextField(3);
@@ -55,7 +61,35 @@ class ControlPanel extends JPanel{
 		labelB2 = new JLabel("x + ");
 		mzero = new JLabel("m0= ");
 		
-		//akcja dla funkcji liniowej
+			//liniowa
+		add(linA);
+		add(labelA);
+		add(linB);
+
+			//kwadratowa
+		add(quadA);
+		add(labelB1);
+		add(quadB);
+		add(labelB2);
+		add(quadC);
+		add(mzero);
+
+		//klasa anonimowa
+		Zerowe zerowe = new Zerowe();
+		
+		//	Kontrolka rysuj
+		drawButton=new JButton("Rysuj");
+		add(drawButton);
+		
+		//	Kontrolki obs�uguj�ce historie namalowanych funkcji
+		poprzedniaFunkcja = new JButton("<");
+		kolejnaFunkcja = new JButton(">");
+		add(poprzedniaFunkcja);
+		add(kolejnaFunkcja);
+		
+		
+//ACTION LISTENERS
+		
 		liniowa.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -69,7 +103,7 @@ class ControlPanel extends JPanel{
 				quadB.setEditable(false);
 				quadC.setEditable(false);
 				akcja = 1;
-				///System.out.println(akcja);
+				System.out.println(akcja);
 			}
 		});
 
@@ -85,30 +119,13 @@ class ControlPanel extends JPanel{
 				quadB.setEditable(true);
 				quadC.setEditable(true);
 				akcja = 2;
-				//System.out.println(akcja);
+				System.out.println(akcja);
 			}
 		});
 
-		//liniowa
-		add(linA);
-		add(labelA);
-		add(linB);
 
-		//kwadratowa
-		add(quadA);
-		add(labelB1);
-		add(quadB);
-		add(labelB2);
-		add(quadC);
-		add(mzero);
-
-		//klasa anonimowa
-		Zerowe zerowe = new Zerowe();
-		
 		//funkcja glownego przycisku do rysowania
-		drawButton=new JButton("Rysuj");
-		add(drawButton);
-		drawButton.addActionListener(new  ActionListener() {
+		drawButton.addActionListener (new  ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,8 +137,9 @@ class ControlPanel extends JPanel{
 							parentFrame.b = Integer.parseInt(linB.getText());
 							parentFrame.flag = 'l';
 							mzero.setText(zerowe.linezero(parentFrame.a,parentFrame.b));
-							
-							
+
+							history.add(new LinearFunction(parentFrame.a, parentFrame.b));
+							historyIndex++;
 						}
 						if (akcja == 2)
 						{
@@ -130,10 +148,15 @@ class ControlPanel extends JPanel{
 							parentFrame.c = Integer.parseInt(quadC.getText());
 							parentFrame.flag = 'k';
 							mzero.setText(zerowe.quadzero(parentFrame.a,parentFrame.b,parentFrame.c));
+							
+							history.add(new SquareFunction(parentFrame.a, parentFrame.b, parentFrame.c));
+							historyIndex++;
 						}
 						
 						parentFrame.repaint();
-						
+						System.out.println(parentFrame.a);
+						System.out.println(parentFrame.b);
+						System.out.println(parentFrame.c);
 					}
 					catch (NumberFormatException err) {
 						throw new IncorrectGraphDataInput("Niepoprawne dane w polach tekstowych.", parentFrame);
@@ -141,23 +164,83 @@ class ControlPanel extends JPanel{
 					
 				}
 				catch (IncorrectGraphDataInput err){
-					
+					System.out.println(parentFrame.a);
+					System.out.println(parentFrame.b);
+					System.out.println(parentFrame.c);
 				}
 				catch (Exception err) {
 					err.printStackTrace();
-					System.out.println("Niespodziewany b³¹d");
-					
+					System.out.println("Niespodziewany b��d");
+					System.out.println(parentFrame.a);
+					System.out.println(parentFrame.b);
+					System.out.println(parentFrame.c);
 				}
 				
 			}
 		});
-
 		
-
-	}
+		poprzedniaFunkcja.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (history.size() > 2 && historyIndex > 0)
+				{
+					historyIndex--;
+					System.out.println(historyIndex);
+					Function temp = history.get(historyIndex);
+					
+					if (temp.getTyp() == 'l') {
+						parentFrame.flag = 'l';
+						parentFrame.a = temp.getWsDoPierwszej();
+						parentFrame.b = temp.getWyrazWolny();
+					}else {
+						parentFrame.flag = 'k';
+						parentFrame.a = temp.getWsDoGrugiej();
+						parentFrame.b = temp.getWsDoPierwszej();
+						parentFrame.c = temp.getWyrazWolny();
+					}
+					
+					parentFrame.repaint();
+					
+				}
+				
+				
+			}
+		});
+		
+		kolejnaFunkcja.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (historyIndex < history.size() -1)
+				{
+					historyIndex++;
+					System.out.println(historyIndex);
+					Function temp = history.get(historyIndex);
+					
+					if (temp.getTyp() == 'l') {
+						parentFrame.flag = 'l';
+						parentFrame.a = temp.getWsDoPierwszej();
+						parentFrame.b = temp.getWyrazWolny();
+					}else {
+						parentFrame.flag = 'k';
+						parentFrame.a = temp.getWsDoGrugiej();
+						parentFrame.b = temp.getWsDoPierwszej();
+						parentFrame.c = temp.getWyrazWolny();
+					}
+					
+					parentFrame.repaint();
+					
+				}
+				
+				
+			}
+		});
 	
-
+	}
 	public class IncorrectGraphDataInput extends Exception {
+		
+		
 		
 		public IncorrectGraphDataInput(String messageTitle, AppDraw frame) {
 			JOptionPane.showMessageDialog(frame, messageTitle);
