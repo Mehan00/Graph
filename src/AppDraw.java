@@ -17,7 +17,7 @@ public class AppDraw extends JFrame {
     public int a=0;
     public int b=1000;
     public int c=1000;
-    
+    public char flag = '-';
 
     public AppDraw(String title) {
         
