@@ -183,7 +183,7 @@ class ControlPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if (history.size() > 2 && historyIndex > 0)
+				if (history.size() >= 2 && historyIndex > 0)
 				{
 					historyIndex--;
 					System.out.println(historyIndex);
