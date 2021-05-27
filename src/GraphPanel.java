@@ -11,6 +11,7 @@ import java.awt.*;
 
 class GraphPanel extends JPanel{
     private AppDraw parentFrame;
+    
     public GraphPanel(AppDraw parentFrame) {
         this.parentFrame=parentFrame;
         setPreferredSize(new Dimension(600,600));
@@ -67,27 +68,36 @@ class GraphPanel extends JPanel{
 
         //przykładowe funkcje 
         //TO DO ----- liczby tylu double z panelu sterowania ?? double to fraction ??
-
-        g1.setColor(Color.red);
-        Polygon p1 = new Polygon();
-        for (int x = -600; x <= 600; x++) {
-            p1.addPoint(w+scale*x, h - scale*((parentFrame.a*x) + parentFrame.b));
+        
+        if (!(parentFrame.flag == '-'))
+        {
+        	if (parentFrame.flag == 'l') {
+        		g1.setColor(Color.red);
+                Polygon p1 = new Polygon();
+                for (int x = -600; x <= 600; x++) {
+                    p1.addPoint(w+scale*x, h - scale*((parentFrame.a*x) + parentFrame.b));
+                }
+                g1.drawPolyline(p1.xpoints, p1.ypoints, p1.npoints);
+        	}
+        	if (parentFrame.flag == 'k') {
+        		g1.setColor(Color.green);
+                Polygon p2 = new Polygon();
+                for (int x = -600; x <= 600; x++) {
+                    p2.addPoint(w+scale*x, h - scale*((parentFrame.a * x * x) + (parentFrame.b * x ) + parentFrame.c));
+                }
+                g1.drawPolyline(p2.xpoints, p2.ypoints, p2.npoints);
+        	}
         }
-        g1.drawPolyline(p1.xpoints, p1.ypoints, p1.npoints);
+        
 
-        g1.setColor(Color.green);
-        Polygon p2 = new Polygon();
-        for (int x = -600; x <= 600; x++) {
-            p2.addPoint(w+scale*x, h - scale*((parentFrame.a * x * x) + (parentFrame.b * x ) + parentFrame.c));
-        }
-        g1.drawPolyline(p2.xpoints, p2.ypoints, p2.npoints);
+        
 
-        g1.setColor(Color.blue);
-        Polygon p3 = new Polygon();
-        for (int x = -600; x <= 600; x++) {
-            p3.addPoint(w+scale*x, h - scale*(7/2));
-        }
-        g1.drawPolyline(p3.xpoints, p3.ypoints, p3.npoints);
+//        g1.setColor(Color.blue);
+//        Polygon p3 = new Polygon();
+//        for (int x = -600; x <= 600; x++) {
+//            p3.addPoint(w+scale*x, h - scale*(7/2));
+//        }
+        //g1.drawPolyline(p3.xpoints, p3.ypoints, p3.npoints);
         
         //---------------------------------------------
         
