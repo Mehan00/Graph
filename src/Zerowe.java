@@ -1,4 +1,4 @@
-//	#Obliczanie miejsca zerowego korzystaj¹c z klas anonimowych
+
 public class Zerowe {
 
     //funkcja liniowa
@@ -12,7 +12,7 @@ public class Zerowe {
             return "m0 ="+Double.toString(x0);
         }  
     }
-    // //funkcja kwadratowa
+    // //funkcja kwadratowa i warunki 
     public String quadzero(int a, int b, int c){
         double delta = ( b * b ) - (4 * a * c);
         if(delta > 0){
@@ -30,5 +30,5 @@ public class Zerowe {
         }
         return null;  
     }
-    
+
 }
